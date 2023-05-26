@@ -42,24 +42,53 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public boolean isSymmetric() {
+    if (edges.size() == 0) {
+      return true;
+    }
+
     boolean edgeSymmetric = false;
 
-    for (Edge<T> edge : edges) {
-      if (edge.getSource().equals(edge.getDestination())
-          && edge.getDestination().equals(edge.getSource())) {
-        edgeSymmetric = true;
-        break;
+    for (Edge<T> edge1 : edges) {
+      for (Edge<T> edge2 : edges) {
+        if (edge1.getSource().equals(edge2.getDestination())
+            && edge1.getDestination().equals(edge2.getSource())) {
+          edgeSymmetric = true;
+          break;
+        }
       }
     }
+
     if (!edgeSymmetric) {
       return false;
+    } else {
+      return true;
     }
-    return true;
   }
 
   public boolean isTransitive() {
-    // TODO: Task 1.
-    throw new UnsupportedOperationException();
+    if (edges.size() == 0) {
+      return true;
+    }
+
+    for (Edge<T> edge1 : edges) {
+      for (Edge<T> edge2 : edges) {
+        if (edge1.getDestination().equals(edge2.getSource())) {
+          boolean edge3Exists = false;
+
+          for (Edge<T> edge3 : edges) {
+            if (edge1.getSource().equals(edge3.getSource())
+                && edge2.getDestination().equals(edge3.getDestination())) {
+              edge3Exists = true;
+              break;
+            }
+          }
+          if (!edge3Exists) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
   }
 
   public boolean isAntiSymmetric() {
