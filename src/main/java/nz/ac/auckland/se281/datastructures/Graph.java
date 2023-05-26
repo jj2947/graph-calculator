@@ -1,5 +1,6 @@
 package nz.ac.auckland.se281.datastructures;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -159,8 +160,18 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public List<T> iterativeBreadthFirstSearch() {
-    // TODO: Task 2.
-    throw new UnsupportedOperationException();
+    Queue<T> queue = new Queue<>();
+    List<T> visited = new ArrayList<>();
+    
+    for (T vertex : verticies) {
+      queue.enqueue(vertex);
+    }
+
+    while (!queue.isEmpty()) {
+      visited.add(queue.dequeue());
+    }
+
+    return visited;
   }
 
   public List<T> iterativeDepthFirstSearch() {
@@ -177,4 +188,5 @@ public class Graph<T extends Comparable<T>> {
     // TODO: Task 3.
     throw new UnsupportedOperationException();
   }
+
 }
