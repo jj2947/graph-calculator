@@ -21,8 +21,32 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public Set<T> getRoots() {
-    // TODO: Task 1.
-    throw new UnsupportedOperationException();
+    Set<T> roots = new HashSet<T>();
+
+    for (T vertex : verticies) {
+      int count = 0;
+      for (Edge<T> edge : edges) {
+        if (edge.getDestination().equals(vertex)) {
+          count++;
+          break;
+        }
+      }
+      if (count == 0) {
+        roots.add(vertex);
+      }
+    }
+
+    if (isEquivalence()) {
+      for (T vertex : verticies) {
+        for (T vertex2 : verticies) {
+          if (!getEquivalenceClass(vertex).contains(vertex2)) {
+            roots.add(getEquivalenceClass(vertex).iterator().next());
+            break;
+          }
+        }
+      }
+    }
+    return roots;
   }
 
   public boolean isReflexive() {
