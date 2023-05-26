@@ -42,10 +42,17 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public boolean isSymmetric() {
+    boolean edgeSymmetric = false;
+
     for (Edge<T> edge : edges) {
-      if (!edges.contains(new Edge<T>(edge.getDestination(), edge.getSource()))) {
-        return false;
+      if (edge.getSource().equals(edge.getDestination())
+          && edge.getDestination().equals(edge.getSource())) {
+        edgeSymmetric = true;
+        break;
       }
+    }
+    if (!edgeSymmetric) {
+      return false;
     }
     return true;
   }
