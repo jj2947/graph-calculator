@@ -162,12 +162,9 @@ public class Graph<T extends Comparable<T>> {
   public List<T> iterativeBreadthFirstSearch() {
     Queue<T> queue = new Queue<>();
     List<T> visited = new ArrayList<>();
-    
+
     for (T vertex : verticies) {
       queue.enqueue(vertex);
-    }
-
-    while (!queue.isEmpty()) {
       visited.add(queue.dequeue());
     }
 
@@ -175,8 +172,52 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public List<T> iterativeDepthFirstSearch() {
-    // TODO: Task 2.
-    throw new UnsupportedOperationException();
+    Stack<T> stack = new Stack<>();
+    List<T> visited = new ArrayList<>();
+    List<T> toPush = new ArrayList<>();
+
+    for (T root : getRoots()) {
+      toPush.add(root);
+    }
+
+    if (!toPush.isEmpty()) {
+      selectionSort(toPush);
+    }
+
+    for (T element : toPush) {
+      stack.push(element);
+    }
+
+    if (!stack.isEmpty()) {
+      visited.add(stack.pop());
+    }
+
+    for (T vertex : verticies) {
+      toPush.clear();
+
+      for (Edge<T> edge : edges) {
+        if (edge.getSource().equals(vertex)) {
+          toPush.add(edge.getDestination());
+        }
+      }
+
+      if (!toPush.isEmpty()) {
+        selectionSort(toPush);
+      }
+
+      for (T element : toPush) {
+        stack.push(element);
+      }
+
+      while (!stack.isEmpty() && visited.contains(stack.peek())) {
+        stack.pop();
+      }
+      if (!stack.isEmpty()) {
+        visited.add(stack.pop());
+      }
+    }
+
+    return visited;
   }
 
   public List<T> recursiveBreadthFirstSearch() {
@@ -189,4 +230,21 @@ public class Graph<T extends Comparable<T>> {
     throw new UnsupportedOperationException();
   }
 
+  public void selectionSort(List<T> toPush) {
+    for (int i = 0; i < toPush.size() - 1; i++) {
+      int greatest = i;
+      for (int j = i + 1; j < toPush.size(); j++) {
+        if (toPush.get(j).compareTo(toPush.get(greatest)) > 0) {
+          greatest = j;
+        }
+      }
+      swap(i, greatest, toPush);
+    }
+  }
+
+  private void swap(int sourceIndex, int destIndex, List<T> inputArray) {
+    T temp = inputArray.get(destIndex);
+    inputArray.set(destIndex, inputArray.get(sourceIndex));
+    inputArray.set(sourceIndex, temp);
+  }
 }
