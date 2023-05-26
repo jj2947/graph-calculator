@@ -1,5 +1,6 @@
 package nz.ac.auckland.se281.datastructures;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -92,18 +93,45 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public boolean isAntiSymmetric() {
-    // TODO: Task 1.
-    throw new UnsupportedOperationException();
+    if (edges.size() == 0) {
+      return true;
+    }
+
+    for (Edge<T> edge1 : edges) {
+      for (Edge<T> edge2 : edges) {
+        if (edge1.getSource().equals(edge2.getDestination())
+            && edge1.getDestination().equals(edge2.getSource())) {
+          if (!edge1.getSource().equals(edge2.getSource())) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
   }
 
   public boolean isEquivalence() {
-    // TODO: Task 1.
-    throw new UnsupportedOperationException();
+    if (isReflexive() && isSymmetric() && isTransitive()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public Set<T> getEquivalenceClass(T vertex) {
-    // TODO: Task 1.
-    throw new UnsupportedOperationException();
+    if (!isEquivalence()) {
+      return new HashSet<T>();
+    }
+
+    Set<T> equivalenceClass = new HashSet<T>();
+
+    for (Edge<T> edge : edges) {
+      if (edge.getSource().equals(vertex)) {
+        equivalenceClass.add(edge.getDestination());
+      }
+    }
+
+    return equivalenceClass;
   }
 
   public List<T> iterativeBreadthFirstSearch() {

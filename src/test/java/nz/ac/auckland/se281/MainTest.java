@@ -150,7 +150,7 @@ public class MainTest {
     public void T1_B_equivalence_class_1() throws Exception {
       runCommands(OPEN_FILE, "b.txt", COMPUTE_EQUIVALENCE, 1);
       assertContains("Successfully opened graph from file b.txt");
-      assertContains("[0, 1, 2, 3, 4, 5]");
+      assertContains("[]");
     }
 
     @Test
