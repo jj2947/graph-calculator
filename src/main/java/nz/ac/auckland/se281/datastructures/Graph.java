@@ -183,14 +183,14 @@ public class Graph<T extends Comparable<T>> {
         }
       }
 
+      if (!queue.isEmpty()) {
+        visited.add(queue.dequeue());
+      }
+      
       selectionSort(toEnqueue);
 
       for (int i = toEnqueue.size() - 1; i >= 0; i--) {
         queue.enqueue(toEnqueue.get(i));
-      }
-
-      if (!queue.isEmpty()) {
-        visited.add(queue.dequeue());
       }
       
       while (!queue.isEmpty() && visited.contains(queue.peek())) {
@@ -228,7 +228,7 @@ public class Graph<T extends Comparable<T>> {
       if (!stack.isEmpty()) {
         visited.add(stack.pop());
       }
-      
+
       selectionSort(toPush);
 
       for (T element : toPush) {
