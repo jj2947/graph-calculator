@@ -162,10 +162,40 @@ public class Graph<T extends Comparable<T>> {
   public List<T> iterativeBreadthFirstSearch() {
     Queue<T> queue = new Queue<>();
     List<T> visited = new ArrayList<>();
+    List<T> toEnqueue = new ArrayList<>();
 
-    for (T vertex : verticies) {
-      queue.enqueue(vertex);
-      visited.add(queue.dequeue());
+    for (T root : getRoots()) {
+      toEnqueue.add(root);
+    }
+
+    selectionSort(toEnqueue);
+
+    for (int i = toEnqueue.size() - 1; i >= 0; i--) {
+      queue.enqueue(toEnqueue.get(i));
+    }
+
+    while (!queue.isEmpty()) {
+      toEnqueue.clear();
+      for (Edge<T> edge : edges) {
+
+        if (edge.getSource().equals(queue.peek())) {
+          toEnqueue.add(edge.getDestination());
+        }
+      }
+
+      selectionSort(toEnqueue);
+
+      for (int i = toEnqueue.size() - 1; i >= 0; i--) {
+        queue.enqueue(toEnqueue.get(i));
+      }
+
+      if (!queue.isEmpty()) {
+        visited.add(queue.dequeue());
+      }
+      
+      while (!queue.isEmpty() && visited.contains(queue.peek())) {
+        queue.dequeue();
+      }
     }
 
     return visited;
@@ -180,30 +210,26 @@ public class Graph<T extends Comparable<T>> {
       toPush.add(root);
     }
 
-    if (!toPush.isEmpty()) {
-      selectionSort(toPush);
-    }
+    selectionSort(toPush);
 
     for (T element : toPush) {
       stack.push(element);
     }
 
-    if (!stack.isEmpty()) {
-      visited.add(stack.pop());
-    }
-
-    for (T vertex : verticies) {
+    while (!stack.isEmpty()) {
       toPush.clear();
 
       for (Edge<T> edge : edges) {
-        if (edge.getSource().equals(vertex)) {
+        if (edge.getSource().equals(stack.peek())) {
           toPush.add(edge.getDestination());
         }
       }
 
-      if (!toPush.isEmpty()) {
-        selectionSort(toPush);
+      if (!stack.isEmpty()) {
+        visited.add(stack.pop());
       }
+      
+      selectionSort(toPush);
 
       for (T element : toPush) {
         stack.push(element);
@@ -211,9 +237,6 @@ public class Graph<T extends Comparable<T>> {
 
       while (!stack.isEmpty() && visited.contains(stack.peek())) {
         stack.pop();
-      }
-      if (!stack.isEmpty()) {
-        visited.add(stack.pop());
       }
     }
 
@@ -230,15 +253,20 @@ public class Graph<T extends Comparable<T>> {
     throw new UnsupportedOperationException();
   }
 
-  public void selectionSort(List<T> toPush) {
-    for (int i = 0; i < toPush.size() - 1; i++) {
+  public void selectionSort(List<T> list) {
+
+    if (list.size() == 0) {
+      return;
+    }
+
+    for (int i = 0; i < list.size() - 1; i++) {
       int greatest = i;
-      for (int j = i + 1; j < toPush.size(); j++) {
-        if (toPush.get(j).compareTo(toPush.get(greatest)) > 0) {
+      for (int j = i + 1; j < list.size(); j++) {
+        if (list.get(j).compareTo(list.get(greatest)) > 0) {
           greatest = j;
         }
       }
-      swap(i, greatest, toPush);
+      swap(i, greatest, list);
     }
   }
 
