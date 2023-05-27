@@ -1,10 +1,8 @@
 package nz.ac.auckland.se281.datastructures;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -17,33 +15,10 @@ import java.util.Set;
 public class Graph<T extends Comparable<T>> {
   private Set<T> verticies;
   private Set<Edge<T>> edges;
-  private Map<T, LinkedList<T>> adjacencyMap;
 
   public Graph(Set<T> verticies, Set<Edge<T>> edges) {
-
-    adjacencyMap = new HashMap<>();
-
-    // Initialize the adjacency map with empty sets for each vertex
-    for (T vertex : verticies) {
-      adjacencyMap.put(vertex, new LinkedList<T>());
-    }
-
-    // Add edges to the adjacency map
-    for (Edge<T> edge : edges) {
-      T source = edge.getSource();
-      T destination = edge.getDestination();
-
-      LinkedList<T> destinations = adjacencyMap.get(source);
-      if (destinations.isEmpty() || destination.compareTo(destinations.get(destinations.size()-1)) > 0) {
-        destinations.add(destination);
-      } else {
-        int index = 0;
-        while (index < destinations.size() && destination.compareTo(destinations.get(index)) > 0) {
-          index++;
-        }
-        destinations.insert(index, destination);
-      }
-    }
+    this.verticies = verticies;
+    this.edges = edges;
   }
 
   public Set<T> getRoots() {
