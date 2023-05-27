@@ -1,8 +1,10 @@
 package nz.ac.auckland.se281.datastructures;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -13,12 +15,35 @@ import java.util.Set;
  * @param <T> The type of each vertex, that have a total ordering.
  */
 public class Graph<T extends Comparable<T>> {
-  Set<T> verticies;
-  Set<Edge<T>> edges;
+  private Set<T> verticies;
+  private Set<Edge<T>> edges;
+  private Map<T, LinkedList<T>> adjacencyMap;
 
   public Graph(Set<T> verticies, Set<Edge<T>> edges) {
-    this.verticies = verticies;
-    this.edges = edges;
+
+    adjacencyMap = new HashMap<>();
+
+    // Initialize the adjacency map with empty sets for each vertex
+    for (T vertex : verticies) {
+      adjacencyMap.put(vertex, new LinkedList<T>());
+    }
+
+    // Add edges to the adjacency map
+    for (Edge<T> edge : edges) {
+      T source = edge.getSource();
+      T destination = edge.getDestination();
+
+      LinkedList<T> destinations = adjacencyMap.get(source);
+      if (destinations.isEmpty() || destination.compareTo(destinations.get(destinations.size()-1)) > 0) {
+        destinations.add(destination);
+      } else {
+        int index = 0;
+        while (index < destinations.size() && destination.compareTo(destinations.get(index)) > 0) {
+          index++;
+        }
+        destinations.insert(index, destination);
+      }
+    }
   }
 
   public Set<T> getRoots() {
@@ -54,6 +79,7 @@ public class Graph<T extends Comparable<T>> {
     boolean vertexReflexive = false;
 
     for (T vertex : verticies) {
+      vertexReflexive = false;
       for (Edge<T> edge : edges) {
         if (edge.getSource().equals(vertex) && edge.getDestination().equals(vertex)) {
           vertexReflexive = true;
@@ -75,6 +101,7 @@ public class Graph<T extends Comparable<T>> {
     boolean edgeSymmetric = false;
 
     for (Edge<T> edge1 : edges) {
+      edgeSymmetric = false;
       for (Edge<T> edge2 : edges) {
         if (edge1.getSource().equals(edge2.getDestination())
             && edge1.getDestination().equals(edge2.getSource())) {
@@ -82,13 +109,12 @@ public class Graph<T extends Comparable<T>> {
           break;
         }
       }
+      if (!edgeSymmetric) {
+        return false;
+      }
     }
 
-    if (!edgeSymmetric) {
-      return false;
-    } else {
-      return true;
-    }
+    return true;
   }
 
   public boolean isTransitive() {
@@ -186,13 +212,13 @@ public class Graph<T extends Comparable<T>> {
       if (!queue.isEmpty()) {
         visited.add(queue.dequeue());
       }
-      
+
       selectionSort(toEnqueue);
 
       for (int i = toEnqueue.size() - 1; i >= 0; i--) {
         queue.enqueue(toEnqueue.get(i));
       }
-      
+
       while (!queue.isEmpty() && visited.contains(queue.peek())) {
         queue.dequeue();
       }
