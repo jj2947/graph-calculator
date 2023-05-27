@@ -17,11 +17,11 @@ public class Stack<T> {
   }
 
   public T pop() {
-    Node<T> poppedNode = tail;
+    Node<T> removedNode = tail;
     tail = tail.getNext();
-    poppedNode.setNext(null);
+    removedNode.setNext(null);
     size--;
-    return poppedNode.getData();
+    return removedNode.getData();
   }
 
   public T peek() {
