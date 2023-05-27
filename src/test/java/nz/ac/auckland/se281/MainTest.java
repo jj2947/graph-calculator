@@ -52,7 +52,7 @@ public class MainTest {
     public void T1_B_reflexivity() throws Exception {
       runCommands(OPEN_FILE, "b.txt", CHECK_REFLEXIVITY);
       assertContains("Successfully opened graph from file b.txt");
-      assertContains("The graph is reflexive");
+      assertContains("The graph is NOT reflexive");
     }
 
     @Test
@@ -73,7 +73,7 @@ public class MainTest {
     public void T1_B_symmetry() throws Exception {
       runCommands(OPEN_FILE, "b.txt", CHECK_SYMMETRY);
       assertContains("Successfully opened graph from file b.txt");
-      assertContains("The graph is symmetric");
+      assertContains("The graph is NOT symmetric");
     }
 
     @Test
