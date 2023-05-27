@@ -1,39 +1,47 @@
 package nz.ac.auckland.se281.datastructures;
 
-import java.util.LinkedList;
-
 public class Queue<T> {
 
-  private LinkedList<T> queue;
+  private int length;
+  private Node<T> head, tail;
 
   public Queue() {
-    queue = new LinkedList<>();
+    length = 0;
+    head = null;
+    tail = null;
   }
 
   public void enqueue(T data) {
-    queue.addLast(data);
+    Node<T> node = new Node<>(data);
+    if (isEmpty()) {
+      head = node;
+    } else {
+      tail.setNext(node);
+    }
+    tail = node;
+    length++;
   }
 
   public T dequeue() {
-    T data = queue.get(0);
-    queue.removeFirst();
-    return data;
+    Node <T> dequeued = head;
+    head = head.getNext();
+    length--;
+    return dequeued.getData();
   }
 
   public T peek() {
-    return queue.getFirst();
+    return head.getData();
+  }
+
+  public int size() {
+    return length;
   }
 
   public boolean isEmpty() {
-    if (queue.size() == 0) {
+    if (size() == 0) {
       return true;
     } else {
       return false;
     }
-  }
-
-  @Override
-  public String toString() {
-    return queue.toString();
   }
 }
