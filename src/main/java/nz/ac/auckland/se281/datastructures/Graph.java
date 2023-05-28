@@ -1,8 +1,10 @@
 package nz.ac.auckland.se281.datastructures;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -15,10 +17,40 @@ import java.util.Set;
 public class Graph<T extends Comparable<T>> {
   private Set<T> verticies;
   private Set<Edge<T>> edges;
+  private Map<T, LinkedList<T>> adjacencyMap;
 
   public Graph(Set<T> verticies, Set<Edge<T>> edges) {
     this.verticies = verticies;
     this.edges = edges;
+
+    adjacencyMap = new HashMap<>();
+
+    // Initialize the adjacency map with empty sets for each vertex
+    for (T vertex : verticies) {
+      adjacencyMap.put(vertex, new LinkedList<T>());
+    }
+
+    // Add edges to the adjacency map
+    for (Edge<T> edge : edges) {
+      T source = edge.getSource();
+      T destination = edge.getDestination();
+
+      LinkedList<T> destinations = adjacencyMap.get(source);
+      if (destinations.isEmpty()
+          || destination.compareTo(destinations.get(destinations.size() - 1)) > 0) {
+        destinations.add(destination);
+      } else {
+        int index = 0;
+        while (index < destinations.size() && destination.compareTo(destinations.get(index)) > 0) {
+          index++;
+        }
+        destinations.insert(index, destination);
+      }
+    }
+  }
+
+  public Map<T, LinkedList<T>> getAdjacencyMap() {
+    return adjacencyMap;
   }
 
   public Set<T> getRoots() {
@@ -176,29 +208,20 @@ public class Graph<T extends Comparable<T>> {
     }
 
     while (!queue.isEmpty()) {
-      toEnqueue.clear();
-      for (Edge<T> edge : edges) {
-
-        if (edge.getSource().equals(queue.peek())) {
-          toEnqueue.add(edge.getDestination());
+      for (T vertex : adjacencyMap.keySet()) {
+        if (vertex.equals(queue.peek())) {
+          visited.add(queue.dequeue());
+          for (int i = 0; i < adjacencyMap.get(vertex).size(); i++) {
+            queue.enqueue(adjacencyMap.get(vertex).get(i));
+          }
+          break;
         }
-      }
-
-      if (!queue.isEmpty()) {
-        visited.add(queue.dequeue());
-      }
-
-      selectionSort(toEnqueue);
-
-      for (int i = toEnqueue.size() - 1; i >= 0; i--) {
-        queue.enqueue(toEnqueue.get(i));
       }
 
       while (!queue.isEmpty() && visited.contains(queue.peek())) {
         queue.dequeue();
       }
     }
-
     return visited;
   }
 
@@ -218,22 +241,17 @@ public class Graph<T extends Comparable<T>> {
     }
 
     while (!stack.isEmpty()) {
-      toPush.clear();
 
-      for (Edge<T> edge : edges) {
-        if (edge.getSource().equals(stack.peek())) {
-          toPush.add(edge.getDestination());
+      for (T vertex : adjacencyMap.keySet()) {
+        if (vertex.equals(stack.peek())) {
+
+          visited.add(stack.pop());
+
+          for (int i = adjacencyMap.get(vertex).size() - 1; i >= 0; i--) {
+            stack.push(adjacencyMap.get(vertex).get(i));
+          }
+          break;
         }
-      }
-
-      if (!stack.isEmpty()) {
-        visited.add(stack.pop());
-      }
-
-      selectionSort(toPush);
-
-      for (T element : toPush) {
-        stack.push(element);
       }
 
       while (!stack.isEmpty() && visited.contains(stack.peek())) {
