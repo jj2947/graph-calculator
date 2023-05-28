@@ -270,8 +270,31 @@ public class MainTest {
     }
 
     @Test
-    public void TY_01_your_own_test() throws Exception {
-      // Write your own test here, in the same format as the other tests.
+    public void T2_D_iterative_BFS() throws Exception {
+      runCommands(OPEN_FILE, "d.txt", GRAPH_SEARCH_IBFS);
+      assertContains("Successfully opened graph from file d.txt");
+      assertContains("[0, 1, 4, 2, 3, 5, 6]");
+    }
+
+    @Test
+    public void T2_F_iterative_BFS() throws Exception {
+      runCommands(OPEN_FILE, "f.txt", GRAPH_SEARCH_IBFS);
+      assertContains("Successfully opened graph from file f.txt");
+      assertContains("[1, 2, 3, 4, 8, 9, 5, 6, 7]");
+    }
+
+    @Test
+    public void T2_D_iterative_DFS() throws Exception {
+      runCommands(OPEN_FILE, "d.txt", GRAPH_SEARCH_IDFS);
+      assertContains("Successfully opened graph from file d.txt");
+      assertContains("[0, 1, 2, 3, 4, 5, 6]");
+    }
+
+    @Test
+    public void T2_F_iterative_DFS() throws Exception {
+      runCommands(OPEN_FILE, "f.txt", GRAPH_SEARCH_IDFS);
+      assertContains("Successfully opened graph from file f.txt");
+      assertContains("[1, 2, 8, 9, 3, 5, 6, 4, 7]");
     }
   }
 }
