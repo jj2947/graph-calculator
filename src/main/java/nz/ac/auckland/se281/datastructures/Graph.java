@@ -2,10 +2,10 @@ package nz.ac.auckland.se281.datastructures;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * A graph that is composed of a set of verticies and edges.
@@ -54,7 +54,7 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public Set<T> getRoots() {
-    Set<T> roots = new HashSet<T>();
+    Set<T> roots = new TreeSet<T>();
 
     for (T vertex : verticies) {
       int count = 0;
@@ -178,10 +178,10 @@ public class Graph<T extends Comparable<T>> {
 
   public Set<T> getEquivalenceClass(T vertex) {
     if (!isEquivalence()) {
-      return new HashSet<T>();
+      return new TreeSet<T>();
     }
 
-    Set<T> equivalenceClass = new HashSet<T>();
+    Set<T> equivalenceClass = new TreeSet<T>();
 
     for (Edge<T> edge : edges) {
       if (edge.getSource().equals(vertex)) {
@@ -195,16 +195,9 @@ public class Graph<T extends Comparable<T>> {
   public List<T> iterativeBreadthFirstSearch() {
     Queue<T> queue = new Queue<>();
     List<T> visited = new ArrayList<>();
-    List<T> toEnqueue = new ArrayList<>();
 
     for (T root : getRoots()) {
-      toEnqueue.add(root);
-    }
-
-    selectionSort(toEnqueue);
-
-    for (int i = toEnqueue.size() - 1; i >= 0; i--) {
-      queue.enqueue(toEnqueue.get(i));
+      queue.enqueue(root);
     }
 
     while (!queue.isEmpty()) {
@@ -234,10 +227,8 @@ public class Graph<T extends Comparable<T>> {
       toPush.add(root);
     }
 
-    selectionSort(toPush);
-
-    for (T element : toPush) {
-      stack.push(element);
+    for (int i = toPush.size() - 1; i >= 0; i--) {
+      stack.push(toPush.get(i));
     }
 
     while (!stack.isEmpty()) {
@@ -263,8 +254,15 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public List<T> recursiveBreadthFirstSearch() {
-    // TODO: Task 3.
-    throw new UnsupportedOperationException();
+    List<T> visited = new ArrayList<>();
+    Queue<T> queue = new Queue<>();
+
+    for (T root : getRoots()) {
+      queue.enqueue(root);
+      recursiveBFS(visited, queue);
+    }
+
+    return visited;
   }
 
   public List<T> recursiveDepthFirstSearch() {
@@ -293,5 +291,27 @@ public class Graph<T extends Comparable<T>> {
     T temp = inputArray.get(destIndex);
     inputArray.set(destIndex, inputArray.get(sourceIndex));
     inputArray.set(sourceIndex, temp);
+  }
+
+  private void recursiveBFS(List<T> visited, Queue<T> queue) {
+    if (queue.isEmpty()) {
+      return;
+    }
+
+    for (T vertex : adjacencyMap.keySet()) {
+      if (vertex.equals(queue.peek())) {
+        visited.add(queue.dequeue());
+        for (int i = 0; i < adjacencyMap.get(vertex).size(); i++) {
+          queue.enqueue(adjacencyMap.get(vertex).get(i));
+        }
+        break;
+      }
+    }
+
+    while (!queue.isEmpty() && visited.contains(queue.peek())) {
+      queue.dequeue();
+    }
+
+    recursiveBFS(visited, queue);
   }
 }
