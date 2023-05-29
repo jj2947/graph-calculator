@@ -259,38 +259,21 @@ public class Graph<T extends Comparable<T>> {
 
     for (T root : getRoots()) {
       queue.enqueue(root);
-      recursiveBFS(visited, queue);
     }
-
+    recursiveBFS(visited, queue);
     return visited;
   }
 
   public List<T> recursiveDepthFirstSearch() {
-    // TODO: Task 3.
-    throw new UnsupportedOperationException();
-  }
+    List<T> visited = new ArrayList<>();
+    Stack<T> stack = new Stack<>();
 
-  public void selectionSort(List<T> list) {
-
-    if (list.size() == 0) {
-      return;
+    for (T root : getRoots()) {
+      stack.push(root);
+      recursiveDFS(visited, stack);
     }
 
-    for (int i = 0; i < list.size() - 1; i++) {
-      int greatest = i;
-      for (int j = i + 1; j < list.size(); j++) {
-        if (list.get(j).compareTo(list.get(greatest)) > 0) {
-          greatest = j;
-        }
-      }
-      swap(i, greatest, list);
-    }
-  }
-
-  private void swap(int sourceIndex, int destIndex, List<T> inputArray) {
-    T temp = inputArray.get(destIndex);
-    inputArray.set(destIndex, inputArray.get(sourceIndex));
-    inputArray.set(sourceIndex, temp);
+    return visited;
   }
 
   private void recursiveBFS(List<T> visited, Queue<T> queue) {
@@ -313,5 +296,27 @@ public class Graph<T extends Comparable<T>> {
     }
 
     recursiveBFS(visited, queue);
+  }
+
+  private void recursiveDFS(List<T> visited, Stack<T> stack) {
+    if (stack.isEmpty()) {
+      return;
+    }
+
+    for (T vertex : adjacencyMap.keySet()) {
+      if (vertex.equals(stack.peek())) {
+        visited.add(stack.pop());
+        for (int i = adjacencyMap.get(vertex).size() - 1; i >= 0; i--) {
+          stack.push(adjacencyMap.get(vertex).get(i));
+        }
+        break;
+      }
+    }
+
+    while (!stack.isEmpty() && visited.contains(stack.peek())) {
+      stack.pop();
+    }
+
+    recursiveDFS(visited, stack);
   }
 }
