@@ -244,7 +244,13 @@ public class Graph<T extends Comparable<T>> {
     }
 
     while (!stack.isEmpty()) {
-      dfsAlgorithm(visited, stack);
+      for (T vertex : adjacencyMap.keySet()) {
+        dfsAlgorithm(vertex, visited, stack);
+
+        if (stack.isEmpty()) {
+          break;
+        }
+      }
     }
 
     return visited;
@@ -294,7 +300,13 @@ public class Graph<T extends Comparable<T>> {
       return;
     }
 
-    dfsAlgorithm(visited, stack);
+    for (T vertex : adjacencyMap.keySet()) {
+        dfsAlgorithm(vertex, visited, stack);
+        
+        if (stack.isEmpty()) {
+          break;
+        }
+      }
 
     recursiveDfs(visited, stack);
   }
@@ -322,9 +334,9 @@ public class Graph<T extends Comparable<T>> {
     inputArray.set(sourceIndex, temp);
   }
 
-  private void dfsAlgorithm(List<T> visited, Stack<T> stack) {
+  private void dfsAlgorithm(T vertex, List<T> visited, Stack<T> stack) {
 
-    for (T vertex : adjacencyMap.keySet()) {
+   
       if (vertex.equals(stack.peek())) {
 
         visited.add(stack.pop());
@@ -332,9 +344,9 @@ public class Graph<T extends Comparable<T>> {
         for (int i = adjacencyMap.get(vertex).size() - 1; i >= 0; i--) {
           stack.push(adjacencyMap.get(vertex).get(i));
         }
-        break;
+        
       }
-    }
+    
 
     while (!stack.isEmpty() && visited.contains(stack.peek())) {
       stack.pop();
