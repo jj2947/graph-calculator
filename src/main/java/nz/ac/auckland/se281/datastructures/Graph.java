@@ -255,22 +255,7 @@ public class Graph<T extends Comparable<T>> {
     }
 
     while (!stack.isEmpty()) {
-
-      for (T vertex : adjacencyMap.keySet()) {
-        if (vertex.equals(stack.peek())) {
-
-          visited.add(stack.pop());
-
-          for (int i = adjacencyMap.get(vertex).size() - 1; i >= 0; i--) {
-            stack.push(adjacencyMap.get(vertex).get(i));
-          }
-          break;
-        }
-      }
-
-      while (!stack.isEmpty() && visited.contains(stack.peek())) {
-        stack.pop();
-      }
+      dfs(visited, stack);
     }
 
     return visited;
@@ -370,5 +355,23 @@ public class Graph<T extends Comparable<T>> {
     T temp = inputArray.get(destIndex);
     inputArray.set(destIndex, inputArray.get(sourceIndex));
     inputArray.set(sourceIndex, temp);
+  }
+
+  private void dfs(List<T> visited, Stack<T> stack) {
+    for (T vertex : adjacencyMap.keySet()) {
+      if (vertex.equals(stack.peek())) {
+
+        visited.add(stack.pop());
+
+        for (int i = adjacencyMap.get(vertex).size() - 1; i >= 0; i--) {
+          stack.push(adjacencyMap.get(vertex).get(i));
+        }
+        break;
+      }
+    }
+
+    while (!stack.isEmpty() && visited.contains(stack.peek())) {
+      stack.pop();
+    }
   }
 }

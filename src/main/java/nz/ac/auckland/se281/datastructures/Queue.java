@@ -3,7 +3,8 @@ package nz.ac.auckland.se281.datastructures;
 public class Queue<T> {
 
   private int length;
-  private Node<T> front, rear;
+  private Node<T> front;
+  private Node<T> rear;
 
   public Queue() {
     length = 0;
@@ -23,7 +24,7 @@ public class Queue<T> {
   }
 
   public T dequeue() {
-    Node <T> dequeued = front;
+    Node<T> dequeued = front;
     front = front.getNext();
     length--;
     return dequeued.getData();
