@@ -90,7 +90,7 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public boolean isReflexive() {
-    boolean vertexReflexive = false;
+    boolean vertexReflexive ;
 
     for (T vertex : verticies) {
       vertexReflexive = false;
@@ -112,7 +112,7 @@ public class Graph<T extends Comparable<T>> {
       return true;
     }
 
-    boolean edgeSymmetric = false;
+    boolean edgeSymmetric;
 
     for (Edge<T> edge1 : edges) {
       edgeSymmetric = false;
@@ -265,7 +265,7 @@ public class Graph<T extends Comparable<T>> {
 
     for (T root : getRoots()) {
       queue.enqueue(root);
-      recursiveBFS(visited, queue);
+      recursiveBfs(visited, queue);
     }
     return visited;
   }
@@ -273,16 +273,22 @@ public class Graph<T extends Comparable<T>> {
   public List<T> recursiveDepthFirstSearch() {
     List<T> visited = new ArrayList<>();
     Stack<T> stack = new Stack<>();
+    List<T> toPush = new ArrayList<>();
 
     for (T root : getRoots()) {
-      stack.push(root);
-      recursiveDFS(visited, stack);
+      toPush.add(root);
     }
+
+    for (int i = toPush.size() - 1; i >= 0; i--) {
+      stack.push(toPush.get(i));
+    }
+
+    recursiveDfs(visited, stack);
 
     return visited;
   }
 
-  private void recursiveBFS(List<T> visited, Queue<T> queue) {
+  private void recursiveBfs(List<T> visited, Queue<T> queue) {
     if (queue.isEmpty()) {
       return;
     }
@@ -301,10 +307,10 @@ public class Graph<T extends Comparable<T>> {
       queue.dequeue();
     }
 
-    recursiveBFS(visited, queue);
+    recursiveBfs(visited, queue);
   }
 
-  private void recursiveDFS(List<T> visited, Stack<T> stack) {
+  private void recursiveDfs(List<T> visited, Stack<T> stack) {
     if (stack.isEmpty()) {
       return;
     }
@@ -323,6 +329,6 @@ public class Graph<T extends Comparable<T>> {
       stack.pop();
     }
 
-    recursiveDFS(visited, stack);
+    recursiveDfs(visited, stack);
   }
 }
