@@ -270,29 +270,57 @@ public class MainTest {
     }
 
     @Test
-    public void T2_D_iterative_BFS() throws Exception {
+    public void T2_D_recursive_BFS() throws Exception {
       runCommands(OPEN_FILE, "d.txt", GRAPH_SEARCH_RBFS);
       assertContains("Successfully opened graph from file d.txt");
-      assertContains("[0, 1, 4, 2, 3, 5, 6]");
+      assertContains("[0, 1, 2, 3, 4, 5, 6]");
     }
 
     @Test
-    public void T2_F_iterative_BFS() throws Exception {
+    public void T2_F_recursive_BFS() throws Exception {
       runCommands(OPEN_FILE, "f.txt", GRAPH_SEARCH_RBFS);
       assertContains("Successfully opened graph from file f.txt");
       assertContains("[1, 2, 3, 4, 8, 9, 5, 6, 7]");
     }
 
     @Test
-    public void T2_D_iterative_DFS() throws Exception {
+    public void T2_D_recursive_DFS() throws Exception {
       runCommands(OPEN_FILE, "d.txt", GRAPH_SEARCH_RDFS);
       assertContains("Successfully opened graph from file d.txt");
       assertContains("[0, 1, 2, 3, 4, 5, 6]");
     }
 
     @Test
-    public void T2_F_iterative_DFS() throws Exception {
+    public void T2_F_recursive_DFS() throws Exception {
       runCommands(OPEN_FILE, "f.txt", GRAPH_SEARCH_RDFS);
+      assertContains("Successfully opened graph from file f.txt");
+      assertContains("[1, 2, 8, 9, 3, 5, 6, 4, 7]");
+    }
+
+    @Test
+    public void T2_D_iterative_BFS() throws Exception {
+      runCommands(OPEN_FILE, "d.txt", GRAPH_SEARCH_IBFS);
+      assertContains("Successfully opened graph from file d.txt");
+      assertContains("[0, 1, 2, 3, 4, 5, 6]");
+    }
+
+    @Test
+    public void T2_F_iterative_BFS() throws Exception {
+      runCommands(OPEN_FILE, "f.txt", GRAPH_SEARCH_IBFS);
+      assertContains("Successfully opened graph from file f.txt");
+      assertContains("[1, 2, 3, 4, 8, 9, 5, 6, 7]");
+    }
+
+    @Test
+    public void T2_D_iterative_DFS() throws Exception {
+      runCommands(OPEN_FILE, "d.txt", GRAPH_SEARCH_IDFS);
+      assertContains("Successfully opened graph from file d.txt");
+      assertContains("[0, 1, 2, 3, 4, 5, 6]");
+    }
+
+    @Test
+    public void T2_F_iterative_DFS() throws Exception {
+      runCommands(OPEN_FILE, "f.txt", GRAPH_SEARCH_IDFS);
       assertContains("Successfully opened graph from file f.txt");
       assertContains("[1, 2, 8, 9, 3, 5, 6, 4, 7]");
     }
