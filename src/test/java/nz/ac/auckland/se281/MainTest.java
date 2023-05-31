@@ -324,5 +324,12 @@ public class MainTest {
       assertContains("Successfully opened graph from file f.txt");
       assertContains("[1, 2, 8, 9, 3, 5, 6, 4, 7]");
     }
+
+    @Test
+    public void T1_D_roots() throws Exception {
+      runCommands(OPEN_FILE, "d.txt", LIST_ROOT_VERTICIES);
+      assertContains("Successfully opened graph from file d.txt");
+      assertContains("[0, 1, 4]");
+    }
   }
 }
