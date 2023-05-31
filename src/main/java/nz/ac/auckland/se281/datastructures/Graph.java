@@ -224,18 +224,7 @@ public class Graph<T extends Comparable<T>> {
       queue.enqueue(root);
 
       while (!queue.isEmpty()) {
-        for (T vertex : adjacencyMap.keySet()) {
-          if (vertex.equals(queue.peek())) {
-            visited.add(queue.dequeue());
-            for (int i = 0; i < adjacencyMap.get(vertex).size(); i++) {
-              queue.enqueue(adjacencyMap.get(vertex).get(i));
-            }
-            break;
-          }
-        }
-        while (!queue.isEmpty() && visited.contains(queue.peek())) {
-          queue.dequeue();
-        }
+        bfsAlgorithm(visited, queue);
       }
     }
     return visited;
@@ -255,7 +244,7 @@ public class Graph<T extends Comparable<T>> {
     }
 
     while (!stack.isEmpty()) {
-      dfs(visited, stack);
+      dfsAlgorithm(visited, stack);
     }
 
     return visited;
@@ -295,19 +284,7 @@ public class Graph<T extends Comparable<T>> {
       return;
     }
 
-    for (T vertex : adjacencyMap.keySet()) {
-      if (vertex.equals(queue.peek())) {
-        visited.add(queue.dequeue());
-        for (int i = 0; i < adjacencyMap.get(vertex).size(); i++) {
-          queue.enqueue(adjacencyMap.get(vertex).get(i));
-        }
-        break;
-      }
-    }
-
-    while (!queue.isEmpty() && visited.contains(queue.peek())) {
-      queue.dequeue();
-    }
+    bfsAlgorithm(visited, queue);
 
     recursiveBfs(visited, queue);
   }
@@ -317,19 +294,7 @@ public class Graph<T extends Comparable<T>> {
       return;
     }
 
-    for (T vertex : adjacencyMap.keySet()) {
-      if (vertex.equals(stack.peek())) {
-        visited.add(stack.pop());
-        for (int i = adjacencyMap.get(vertex).size() - 1; i >= 0; i--) {
-          stack.push(adjacencyMap.get(vertex).get(i));
-        }
-        break;
-      }
-    }
-
-    while (!stack.isEmpty() && visited.contains(stack.peek())) {
-      stack.pop();
-    }
+    dfsAlgorithm(visited, stack);
 
     recursiveDfs(visited, stack);
   }
@@ -357,7 +322,8 @@ public class Graph<T extends Comparable<T>> {
     inputArray.set(sourceIndex, temp);
   }
 
-  private void dfs(List<T> visited, Stack<T> stack) {
+  private void dfsAlgorithm(List<T> visited, Stack<T> stack) {
+
     for (T vertex : adjacencyMap.keySet()) {
       if (vertex.equals(stack.peek())) {
 
@@ -372,6 +338,22 @@ public class Graph<T extends Comparable<T>> {
 
     while (!stack.isEmpty() && visited.contains(stack.peek())) {
       stack.pop();
+    }
+  }
+
+  private void bfsAlgorithm(List<T> visited, Queue<T> queue) {
+    for (T vertex : adjacencyMap.keySet()) {
+      if (vertex.equals(queue.peek())) {
+        visited.add(queue.dequeue());
+        for (int i = 0; i < adjacencyMap.get(vertex).size(); i++) {
+          queue.enqueue(adjacencyMap.get(vertex).get(i));
+        }
+        break;
+      }
+    }
+
+    while (!queue.isEmpty() && visited.contains(queue.peek())) {
+      queue.dequeue();
     }
   }
 }
