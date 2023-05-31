@@ -2,10 +2,10 @@ package nz.ac.auckland.se281.datastructures;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * A graph that is composed of a set of verticies and edges.
@@ -23,6 +23,7 @@ public class Graph<T extends Comparable<T>> {
     this.verticies = verticies;
     this.edges = edges;
 
+    // Initialize the adjacency map
     adjacencyMap = new HashMap<>();
 
     // Initialize the adjacency map with empty sets for each vertex
@@ -35,10 +36,16 @@ public class Graph<T extends Comparable<T>> {
       T source = edge.getSource();
       T destination = edge.getDestination();
 
+      // Add the destination to the adjacency map of the source
       LinkedList<T> destinations = adjacencyMap.get(source);
+
+      // If destinations is empty or the destination is greater than the last element in the list,
+      // add it to destinations
       if (destinations.isEmpty()
           || destination.compareTo(destinations.get(destinations.size() - 1)) > 0) {
         destinations.add(destination);
+        // Otherwise, find the correct index to insert the destination so destinations is ordered
+        // from smallest to largest
       } else {
         int index = 0;
         while (index < destinations.size() && destination.compareTo(destinations.get(index)) > 0) {
@@ -54,7 +61,7 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public Set<T> getRoots() {
-    Set<T> roots = new TreeSet<T>();
+    Set<T> roots = new HashSet<T>();
 
     for (T vertex : verticies) {
       int count = 0;
@@ -178,10 +185,10 @@ public class Graph<T extends Comparable<T>> {
 
   public Set<T> getEquivalenceClass(T vertex) {
     if (!isEquivalence()) {
-      return new TreeSet<T>();
+      return new HashSet<T>();
     }
 
-    Set<T> equivalenceClass = new TreeSet<T>();
+    Set<T> equivalenceClass = new HashSet<T>();
 
     for (Edge<T> edge : edges) {
       if (edge.getSource().equals(vertex)) {
@@ -198,21 +205,20 @@ public class Graph<T extends Comparable<T>> {
 
     for (T root : getRoots()) {
       queue.enqueue(root);
-    }
 
-    while (!queue.isEmpty()) {
-      for (T vertex : adjacencyMap.keySet()) {
-        if (vertex.equals(queue.peek())) {
-          visited.add(queue.dequeue());
-          for (int i = 0; i < adjacencyMap.get(vertex).size(); i++) {
-            queue.enqueue(adjacencyMap.get(vertex).get(i));
+      while (!queue.isEmpty()) {
+        for (T vertex : adjacencyMap.keySet()) {
+          if (vertex.equals(queue.peek())) {
+            visited.add(queue.dequeue());
+            for (int i = 0; i < adjacencyMap.get(vertex).size(); i++) {
+              queue.enqueue(adjacencyMap.get(vertex).get(i));
+            }
+            break;
           }
-          break;
         }
-      }
-
-      while (!queue.isEmpty() && visited.contains(queue.peek())) {
-        queue.dequeue();
+        while (!queue.isEmpty() && visited.contains(queue.peek())) {
+          queue.dequeue();
+        }
       }
     }
     return visited;
@@ -259,8 +265,8 @@ public class Graph<T extends Comparable<T>> {
 
     for (T root : getRoots()) {
       queue.enqueue(root);
+      recursiveBFS(visited, queue);
     }
-    recursiveBFS(visited, queue);
     return visited;
   }
 
