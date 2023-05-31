@@ -3,6 +3,7 @@ package nz.ac.auckland.se281.datastructures;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -61,7 +62,8 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public Set<T> getRoots() {
-    Set<T> roots = new HashSet<T>();
+    Set<T> roots = new LinkedHashSet<T>();
+    List<T> unorderedRoots = new ArrayList<T>();
 
     for (T vertex : verticies) {
       int count = 0;
@@ -72,7 +74,7 @@ public class Graph<T extends Comparable<T>> {
         }
       }
       if (count == 0) {
-        roots.add(vertex);
+        unorderedRoots.add(vertex);
       }
     }
 
@@ -80,17 +82,24 @@ public class Graph<T extends Comparable<T>> {
       for (T vertex : verticies) {
         for (T vertex2 : verticies) {
           if (!getEquivalenceClass(vertex).contains(vertex2)) {
-            roots.add(getEquivalenceClass(vertex).iterator().next());
+            unorderedRoots.add(getEquivalenceClass(vertex).iterator().next());
             break;
           }
         }
       }
     }
+
+    selectionSort(unorderedRoots);
+
+    for (T root : unorderedRoots) {
+      roots.add(root);
+    }
+
     return roots;
   }
 
   public boolean isReflexive() {
-    boolean vertexReflexive ;
+    boolean vertexReflexive;
 
     for (T vertex : verticies) {
       vertexReflexive = false;
@@ -184,16 +193,24 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public Set<T> getEquivalenceClass(T vertex) {
+
     if (!isEquivalence()) {
       return new HashSet<T>();
     }
 
     Set<T> equivalenceClass = new HashSet<T>();
+    List<T> unorderedEquivalenceClass = new ArrayList<T>();
 
     for (Edge<T> edge : edges) {
       if (edge.getSource().equals(vertex)) {
-        equivalenceClass.add(edge.getDestination());
+        unorderedEquivalenceClass.add(edge.getDestination());
       }
+    }
+
+    selectionSort(unorderedEquivalenceClass);
+
+    for (T element : unorderedEquivalenceClass) {
+      equivalenceClass.add(element);
     }
 
     return equivalenceClass;
@@ -330,5 +347,28 @@ public class Graph<T extends Comparable<T>> {
     }
 
     recursiveDfs(visited, stack);
+  }
+
+  public void selectionSort(List<T> list) {
+
+    if (list.size() == 0) {
+      return;
+    }
+
+    for (int i = 0; i < list.size() - 1; i++) {
+      int least = i;
+      for (int j = i + 1; j < list.size(); j++) {
+        if (list.get(j).compareTo(list.get(least)) < 0) {
+          least = j;
+        }
+      }
+      swap(i, least, list);
+    }
+  }
+
+  private void swap(int sourceIndex, int destIndex, List<T> inputArray) {
+    T temp = inputArray.get(destIndex);
+    inputArray.set(destIndex, inputArray.get(sourceIndex));
+    inputArray.set(sourceIndex, temp);
   }
 }
