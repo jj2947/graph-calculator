@@ -224,7 +224,13 @@ public class Graph<T extends Comparable<T>> {
       queue.enqueue(root);
 
       while (!queue.isEmpty()) {
-        bfsAlgorithm(visited, queue);
+        for (T vertex : adjacencyMap.keySet()) {
+          bfsAlgorithm(vertex, visited, queue);
+
+          if (queue.isEmpty()) {
+            break;
+          }
+        }
       }
     }
     return visited;
@@ -290,7 +296,13 @@ public class Graph<T extends Comparable<T>> {
       return;
     }
 
-    bfsAlgorithm(visited, queue);
+    for (T vertex : adjacencyMap.keySet()) {
+      bfsAlgorithm(vertex, visited, queue);
+
+      if (queue.isEmpty()) {
+        break;
+      }
+    }
 
     recursiveBfs(visited, queue);
   }
@@ -301,12 +313,12 @@ public class Graph<T extends Comparable<T>> {
     }
 
     for (T vertex : adjacencyMap.keySet()) {
-        dfsAlgorithm(vertex, visited, stack);
-        
-        if (stack.isEmpty()) {
-          break;
-        }
+      dfsAlgorithm(vertex, visited, stack);
+
+      if (stack.isEmpty()) {
+        break;
       }
+    }
 
     recursiveDfs(visited, stack);
   }
@@ -336,31 +348,26 @@ public class Graph<T extends Comparable<T>> {
 
   private void dfsAlgorithm(T vertex, List<T> visited, Stack<T> stack) {
 
-   
-      if (vertex.equals(stack.peek())) {
+    if (vertex.equals(stack.peek())) {
 
-        visited.add(stack.pop());
+      visited.add(stack.pop());
 
-        for (int i = adjacencyMap.get(vertex).size() - 1; i >= 0; i--) {
-          stack.push(adjacencyMap.get(vertex).get(i));
-        }
-        
+      for (int i = adjacencyMap.get(vertex).size() - 1; i >= 0; i--) {
+        stack.push(adjacencyMap.get(vertex).get(i));
       }
-    
+    }
 
     while (!stack.isEmpty() && visited.contains(stack.peek())) {
       stack.pop();
     }
   }
 
-  private void bfsAlgorithm(List<T> visited, Queue<T> queue) {
-    for (T vertex : adjacencyMap.keySet()) {
-      if (vertex.equals(queue.peek())) {
-        visited.add(queue.dequeue());
-        for (int i = 0; i < adjacencyMap.get(vertex).size(); i++) {
-          queue.enqueue(adjacencyMap.get(vertex).get(i));
-        }
-        break;
+  private void bfsAlgorithm(T vertex, List<T> visited, Queue<T> queue) {
+
+    if (vertex.equals(queue.peek())) {
+      visited.add(queue.dequeue());
+      for (int i = 0; i < adjacencyMap.get(vertex).size(); i++) {
+        queue.enqueue(adjacencyMap.get(vertex).get(i));
       }
     }
 
