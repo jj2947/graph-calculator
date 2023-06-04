@@ -302,14 +302,8 @@ public class Graph<T extends Comparable<T>> {
       queue.enqueue(root);
       // Loop through all the vertices in the graph while the queue is not empty
       while (!queue.isEmpty()) {
-        for (T vertex : adjacencyMap.keySet()) {
-          // Run the bfs algorithm on the vertex which will will modify the queue and visited list
-          bfsAlgorithm(vertex, visited, queue);
-          // If the queue is empty, break the loop
-          if (queue.isEmpty()) {
-            break;
-          }
-        }
+        // Run the bfs algorithm which will will modify the queue and visited list
+        bfsAlgorithm(visited, queue);
       }
     }
     return visited;
@@ -338,14 +332,9 @@ public class Graph<T extends Comparable<T>> {
 
     // Loop through all the vertices in the graph while the stack is not empty
     while (!stack.isEmpty()) {
-      for (T vertex : adjacencyMap.keySet()) {
-        // Run the dfs algorithm on the vertex which will modify the stack and visited list
-        dfsAlgorithm(vertex, visited, stack);
-        // If the stack is empty, break the loop
-        if (stack.isEmpty()) {
-          break;
-        }
-      }
+
+      // Run the dfs algorithm which will modify the stack and visited list
+      dfsAlgorithm(visited, stack);
     }
     return visited;
   }
@@ -407,15 +396,8 @@ public class Graph<T extends Comparable<T>> {
       return;
     }
 
-    // Loop through all the vertices in the graph
-    for (T vertex : adjacencyMap.keySet()) {
-      // Run the bfs algorithm on the vertex which will modify the queue and visited list
-      bfsAlgorithm(vertex, visited, queue);
-
-      if (queue.isEmpty()) {
-        break;
-      }
-    }
+    // Run the bfs algorithm which will modify the queue and visited list
+    bfsAlgorithm(visited, queue);
 
     // Recursively call this method
     recursiveBfs(visited, queue);
@@ -432,15 +414,9 @@ public class Graph<T extends Comparable<T>> {
       return;
     }
 
-    // Loop through all the vertices in the graph
-    for (T vertex : adjacencyMap.keySet()) {
-      // Run the dfs algorithm on the vertex which will modify the stack and visited list
-      dfsAlgorithm(vertex, visited, stack);
+    // Run the dfs algorithm which will modify the stack and visited list
+    dfsAlgorithm(visited, stack);
 
-      if (stack.isEmpty()) {
-        break;
-      }
-    }
     // Recursively call this method
     recursiveDfs(visited, stack);
   }
@@ -504,22 +480,22 @@ public class Graph<T extends Comparable<T>> {
   /**
    * Runs the depth first search algorithm and modifies the stack and visited list.
    *
-   * @param vertex the vertex to compare to the vertex at the top of the stack.
    * @param visited the list of visited vertices.
    * @param stack the stack of vertices to visit.
    */
-  private void dfsAlgorithm(T vertex, List<T> visited, Stack<T> stack) {
+  private void dfsAlgorithm(List<T> visited, Stack<T> stack) {
 
-    // If the vertex is equal to the top of the stack, pop the vertex and add it to the
-    // visited list
-    if (vertex.equals(stack.peek())) {
-
-      visited.add(stack.pop());
-
-      // Loop through all the successors of the vertex and push them to the stack in descending
-      // order
-      for (int i = adjacencyMap.get(vertex).size() - 1; i >= 0; i--) {
-        stack.push(adjacencyMap.get(vertex).get(i));
+    for (T vertex : adjacencyMap.keySet()) {
+      // If the vertex is equal to the top of the stack, pop the vertex and add it to the
+      // visited list
+      if (vertex.equals(stack.peek())) {
+        visited.add(stack.pop());
+        // Loop through all the successors of the vertex in descding order and push them to the
+        // stack
+        for (int i = adjacencyMap.get(vertex).size() - 1; i >= 0; i--) {
+          stack.push(adjacencyMap.get(vertex).get(i));
+        }
+        break;
       }
     }
 
@@ -532,18 +508,22 @@ public class Graph<T extends Comparable<T>> {
   /**
    * Runs the breadth first search algorithm and modifies the queue and visited list.
    *
-   * @param vertex the vertex to compare to the vertex at the front of the queue.
    * @param visited the list of visited vertices.
    * @param queue the queue of vertices to visit.
    */
-  private void bfsAlgorithm(T vertex, List<T> visited, Queue<T> queue) {
+  private void bfsAlgorithm(List<T> visited, Queue<T> queue) {
 
-    // If the vertex is at the front of the queue, dequeue the vertex and add it to the visited list
-    if (vertex.equals(queue.peek())) {
-      visited.add(queue.dequeue());
-      // Loop through all the successors of the vertex and enqueue them
-      for (int i = 0; i < adjacencyMap.get(vertex).size(); i++) {
-        queue.enqueue(adjacencyMap.get(vertex).get(i));
+    // Loop through all the vertices in the graph
+    for (T vertex : adjacencyMap.keySet()) {
+      // If the vertex is at the front of the queue, dequeue the vertex and add it to the visited
+      // list
+      if (vertex.equals(queue.peek())) {
+        visited.add(queue.dequeue());
+        // Loop through all the successors of the vertex and enqueue them
+        for (int i = 0; i < adjacencyMap.get(vertex).size(); i++) {
+          queue.enqueue(adjacencyMap.get(vertex).get(i));
+        }
+        break;
       }
     }
 
