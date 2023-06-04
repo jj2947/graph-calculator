@@ -19,6 +19,12 @@ public class Graph<T extends Comparable<T>> {
   private Set<Edge<T>> edges;
   private Map<T, LinkedList<T>> adjacencyMap;
 
+  /**
+   * A graph that is composed of a set of verticies and edges.
+   * 
+   * @param verticies the set of verticies in the graph.
+   * @param edges the set of edges in the graph.
+   */
   public Graph(Set<T> verticies, Set<Edge<T>> edges) {
     this.verticies = verticies;
     this.edges = edges;

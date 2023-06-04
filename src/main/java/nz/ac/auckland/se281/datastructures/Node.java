@@ -1,8 +1,6 @@
 package nz.ac.auckland.se281.datastructures;
 
-/**
- * A node that contains data.
- */
+/** A node that contains data. */
 public class Node<T> {
   private T data;
   private Node<T> next;
