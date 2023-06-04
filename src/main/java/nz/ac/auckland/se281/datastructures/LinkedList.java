@@ -11,9 +11,9 @@ public class LinkedList<T> {
   }
 
   /**
-   * Adds an element to the end of the linked list
+   * Adds an element to the end of the linked list.
    *
-   * @param data the element to be added
+   * @param data the element to be added.
    */
   public void add(T data) {
     // Create a new node with the data
@@ -34,10 +34,10 @@ public class LinkedList<T> {
   }
 
   /**
-   * Gets the element at the specified index and returns it
+   * Gets the element at the specified index and returns it.
    *
-   * @param index the index of the element to be returned
-   * @return the element at the specified index
+   * @param index the index of the element to be returned.
+   * @return the element at the specified index.
    */
   public T get(int index) {
 
@@ -49,10 +49,10 @@ public class LinkedList<T> {
   }
 
   /**
-   * Inserts an element at the specified index
+   * Inserts an element at the specified index.
    *
-   * @param index the index to insert the element at
-   * @param data the element to be inserted
+   * @param index the index to insert the element at.
+   * @param data the element to be inserted.
    */
   public void insert(int index, T data) {
 

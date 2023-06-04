@@ -1,5 +1,6 @@
 package nz.ac.auckland.se281.datastructures;
 
+/** A queue that contains data. */
 public class Queue<T> {
 
   private int length;
@@ -14,9 +15,9 @@ public class Queue<T> {
   }
 
   /**
-   * Adds an element to the end of the queue
+   * Adds an element to the end of the queue.
    *
-   * @param data the element to be added
+   * @param data the element to be added.
    */
   public void enqueue(T data) {
     // Create a new node with the data
@@ -33,9 +34,9 @@ public class Queue<T> {
   }
 
   /**
-   * Removes the first element from the queue and returns it
+   * Removes the first element from the queue and returns it.
    *
-   * @return the first element of the queue
+   * @return the first element of the queue.
    */
   public T dequeue() {
     // Set the dequeued node to the front
@@ -55,9 +56,9 @@ public class Queue<T> {
   }
 
   /**
-   * Checks if the queue is empty
+   * Checks if the queue is empty.
    *
-   * @return true if the queue is empty, false otherwise
+   * @return true if the queue is empty, false otherwise.
    */
   public boolean isEmpty() {
     if (size() == 0) {

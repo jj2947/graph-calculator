@@ -1,5 +1,8 @@
 package nz.ac.auckland.se281.datastructures;
 
+/**
+ * A node that contains data.
+ */
 public class Node<T> {
   private T data;
   private Node<T> next;
@@ -7,7 +10,7 @@ public class Node<T> {
   /**
    * A node that contains data.
    *
-   * @param data
+   * @param data The data to be stored in the node.
    */
   public Node(T data) {
     this.data = data;

@@ -1,5 +1,8 @@
 package nz.ac.auckland.se281.datastructures;
 
+/**
+ * A stack that contains data.
+ */
 public class Stack<T> {
   private Node<T> top;
   private int size;
@@ -13,9 +16,9 @@ public class Stack<T> {
   }
 
   /**
-   * Adds an element to the top of the stack
+   * Adds an element to the top of the stack.
    * 
-   * @param data the element to be added
+   * @param data the element to be added.
    */
   public void push(T data) {
     // Create a new node with the data
@@ -26,9 +29,9 @@ public class Stack<T> {
   }
 
   /**
-   * Removes the top element from the stack and returns it
+   * Removes the top element from the stack and returns it.
    * 
-   * @return the top element of the stack
+   * @return the top element of the stack.
    */
   public T pop() {
     // Set removed node to the current top
@@ -51,9 +54,9 @@ public class Stack<T> {
   }
 
   /**
-   * Checks if the stack is empty
+   * Checks if the stack is empty.
    * 
-   * @return true if the stack is empty, false otherwise
+   * @return true if the stack is empty, false otherwise.
    */
   public boolean isEmpty() {
     if (size == 0) {

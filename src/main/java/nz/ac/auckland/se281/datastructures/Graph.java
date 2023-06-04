@@ -58,9 +58,9 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * Finds the roots of the graph and returns them in ascending numerical order
+   * Finds the roots of the graph and returns them in ascending numerical order.
    *
-   * @return the roots of the graph
+   * @return the roots of the graph.
    */
   public Set<T> getRoots() {
 
@@ -110,9 +110,9 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * Finds whether the graph is reflexive
+   * Finds whether the graph is reflexive.
    *
-   * @return true if the graph is reflexive, false otherwise
+   * @return true if the graph is reflexive, false otherwise.
    */
   public boolean isReflexive() {
 
@@ -140,9 +140,9 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * Finds whether the graph is symmetric
+   * Finds whether the graph is symmetric.
    *
-   * @return true if the graph is symmetric, false otherwise
+   * @return true if the graph is symmetric, false otherwise.
    */
   public boolean isSymmetric() {
 
@@ -175,9 +175,9 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * Finds whether the graph is transitive
+   * Finds whether the graph is transitive.
    *
-   * @return true if the graph is transitive, false otherwise
+   * @return true if the graph is transitive, false otherwise.
    */
   public boolean isTransitive() {
     // If there are no edges in the graph, it is transitive so return true
@@ -217,9 +217,9 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * Finds whether the graph is anti symmetric
+   * Finds whether the graph is anti symmetric.
    *
-   * @return true if the graph is anti symmetric, false otherwise
+   * @return true if the graph is anti symmetric, false otherwise.
    */
   public boolean isAntiSymmetric() {
     // If there are no edges in the graph, it is anti symmetric so return true
@@ -245,9 +245,9 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * Finds whether the graph is an equivalence relation
+   * Finds whether the graph is an equivalence relation.
    *
-   * @return true if the graph is an equivalence relation, false otherwise
+   * @return true if the graph is an equivalence relation, false otherwise.
    */
   public boolean isEquivalence() {
     // If the graph is reflexive, symmetric and transitive, it is an equivalence relation so return
@@ -260,10 +260,10 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * Finds and returns the equivalence class of a vertex
+   * Finds and returns the equivalence class of a vertex.
    *
-   * @param vertex the vertex to find the equivalence class of
-   * @return the equivalence class of the vertex
+   * @param vertex the vertex to find the equivalence class of.
+   * @return the equivalence class of the vertex.
    */
   public Set<T> getEquivalenceClass(T vertex) {
 
@@ -283,9 +283,9 @@ public class Graph<T extends Comparable<T>> {
 
   /**
    * Iteratively finds the visited vertices for the breadth first search algorithm and returns the
-   * visited list
+   * visited list.
    *
-   * @return the visited vertices for the breadth first search algorithm
+   * @return the visited vertices for the breadth first search algorithm.
    */
   public List<T> iterativeBreadthFirstSearch() {
     Queue<T> queue = new Queue<>();
@@ -311,9 +311,9 @@ public class Graph<T extends Comparable<T>> {
 
   /**
    * Iteratively finds the visited vertices for the depth first search algorithm and returns the
-   * visited list
+   * visited list.
    *
-   * @return the visited vertices for the depth first search algorithm
+   * @return the visited vertices for the depth first search algorithm.
    */
   public List<T> iterativeDepthFirstSearch() {
     Stack<T> stack = new Stack<>();
@@ -346,9 +346,9 @@ public class Graph<T extends Comparable<T>> {
 
   /**
    * Recursively finds the visited vertices for the breadth first search algorithm and returns the
-   * visited list
+   * visited list.
    *
-   * @return the visited vertices for the breadth first search algorithm
+   * @return the visited vertices for the breadth first search algorithm.
    */
   public List<T> recursiveBreadthFirstSearch() {
     List<T> visited = new ArrayList<>();
@@ -365,9 +365,9 @@ public class Graph<T extends Comparable<T>> {
 
   /**
    * Recursively finds the visited vertices for the depth first search algorithm and returns the
-   * visited list
+   * visited list.
    *
-   * @return the visited vertices for the depth first search algorithm
+   * @return the visited vertices for the depth first search algorithm.
    */
   public List<T> recursiveDepthFirstSearch() {
     List<T> visited = new ArrayList<>();
@@ -391,10 +391,10 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * Recursively modifies the visited vertices and queue for the breadth first search algorithm
+   * Recursively modifies the visited vertices and queue for the breadth first search algorithm.
    *
-   * @param visited the list of visited vertices
-   * @param queue the queue of vertices to visit
+   * @param visited the list of visited vertices.
+   * @param queue the queue of vertices to visit.
    */
   private void recursiveBfs(List<T> visited, Queue<T> queue) {
     if (queue.isEmpty()) {
@@ -416,10 +416,10 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * Recursively modifies the visited vertices and stack for the depth first search algorithm
+   * Recursively modifies the visited vertices and stack for the depth first search algorithm.
    *
-   * @param visited the list of visited vertices
-   * @param stack the stack of vertices to visit
+   * @param visited the list of visited vertices.
+   * @param stack the stack of vertices to visit.
    */
   private void recursiveDfs(List<T> visited, Stack<T> stack) {
     if (stack.isEmpty()) {
@@ -440,9 +440,9 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * Sorts a list of elements into ascending numerical order
+   * Sorts a list of elements into ascending numerical order.
    *
-   * @param list the list to sort
+   * @param list the list to sort.
    */
   public void sort(List<T> list) {
 
@@ -467,11 +467,11 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * Compares two elements numerically and returns the comparison as an integer
+   * Compares two elements numerically and returns the comparison as an integer.
    *
-   * @param a the first element to compare
-   * @param b the second element to compare
-   * @return the comparison of the two elements
+   * @param a the first element to compare.
+   * @param b the second element to compare.
+   * @return the comparison of the two elements.
    */
   private int compareNumerically(T a, T b) {
     // Convert the elements to integers to compare them numerically
@@ -483,11 +483,11 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * Swaps two elements in a list
+   * Swaps two elements in a list.
    *
-   * @param i the index of the first element to swap
-   * @param j the index of the second element to swap
-   * @param list the list to swap the elements in
+   * @param i the index of the first element to swap.
+   * @param j the index of the second element to swap.
+   * @param list the list to swap the elements in.
    */
   private void swap(int i, int j, List<T> list) {
     T temp = list.get(i);
@@ -496,11 +496,11 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * Runs the depth first search algorithm and modifies the stack and visited list
+   * Runs the depth first search algorithm and modifies the stack and visited list.
    *
-   * @param vertex the vertex to compare to the vertex at the top of the stack
-   * @param visited the list of visited vertices
-   * @param stack the stack of vertices to visit
+   * @param vertex the vertex to compare to the vertex at the top of the stack.
+   * @param visited the list of visited vertices.
+   * @param stack the stack of vertices to visit.
    */
   private void dfsAlgorithm(T vertex, List<T> visited, Stack<T> stack) {
 
@@ -524,11 +524,11 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * Runs the breadth first search algorithm and modifies the queue and visited list
+   * Runs the breadth first search algorithm and modifies the queue and visited list.
    *
-   * @param vertex the vertex to compare to the vertex at the front of the queue
-   * @param visited the list of visited vertices
-   * @param queue the queue of vertices to visit
+   * @param vertex the vertex to compare to the vertex at the front of the queue.
+   * @param visited the list of visited vertices.
+   * @param queue the queue of vertices to visit.
    */
   private void bfsAlgorithm(T vertex, List<T> visited, Queue<T> queue) {
 
