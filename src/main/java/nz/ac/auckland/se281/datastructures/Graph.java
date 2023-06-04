@@ -2,7 +2,6 @@ package nz.ac.auckland.se281.datastructures;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,7 @@ public class Graph<T extends Comparable<T>> {
     this.edges = edges;
 
     // Initialize the adjacency map
-    adjacencyMap = new HashMap<>();
+    adjacencyMap = new HashMap<T, LinkedList<T>>();
 
     // Initialize the adjacency map with empty sets for each vertex
     for (T vertex : verticies) {
@@ -43,13 +42,14 @@ public class Graph<T extends Comparable<T>> {
       // If destinations is empty or the destination is greater than the last element in the list,
       // add it to destinations
       if (destinations.isEmpty()
-          || destination.compareTo(destinations.get(destinations.size() - 1)) > 0) {
+          || compareNumerically(destination, destinations.get(destinations.size() - 1)) > 0) {
         destinations.add(destination);
         // Otherwise, find the correct index to insert the destination so destinations is ordered
         // from smallest to largest
       } else {
         int index = 0;
-        while (index < destinations.size() && destination.compareTo(destinations.get(index)) > 0) {
+        while (index < destinations.size()
+            && compareNumerically(destination, destinations.get(index)) > 0) {
           index++;
         }
         destinations.insert(index, destination);
@@ -89,7 +89,7 @@ public class Graph<T extends Comparable<T>> {
       }
     }
 
-    selectionSort(unorderedRoots);
+    sort(unorderedRoots);
 
     for (T root : unorderedRoots) {
       roots.add(root);
@@ -194,23 +194,14 @@ public class Graph<T extends Comparable<T>> {
 
   public Set<T> getEquivalenceClass(T vertex) {
 
+    Set<T> equivalenceClass = new LinkedHashSet<T>();
+
     if (!isEquivalence()) {
-      return new HashSet<T>();
+      return equivalenceClass;
     }
 
-    Set<T> equivalenceClass = new HashSet<T>();
-    List<T> unorderedEquivalenceClass = new ArrayList<T>();
-
-    for (Edge<T> edge : edges) {
-      if (edge.getSource().equals(vertex)) {
-        unorderedEquivalenceClass.add(edge.getDestination());
-      }
-    }
-
-    selectionSort(unorderedEquivalenceClass);
-
-    for (T element : unorderedEquivalenceClass) {
-      equivalenceClass.add(element);
+    for (int i = 0; i < adjacencyMap.get(vertex).size(); i++) {
+      equivalenceClass.add(adjacencyMap.get(vertex).get(i));
     }
 
     return equivalenceClass;
@@ -323,7 +314,7 @@ public class Graph<T extends Comparable<T>> {
     recursiveDfs(visited, stack);
   }
 
-  public void selectionSort(List<T> list) {
+  public void sort(List<T> list) {
 
     if (list.size() == 0) {
       return;
@@ -332,7 +323,7 @@ public class Graph<T extends Comparable<T>> {
     for (int i = 0; i < list.size() - 1; i++) {
       int least = i;
       for (int j = i + 1; j < list.size(); j++) {
-        if (list.get(j).compareTo(list.get(least)) < 0) {
+        if (compareNumerically(list.get(j), list.get(least)) < 0) {
           least = j;
         }
       }
@@ -340,10 +331,17 @@ public class Graph<T extends Comparable<T>> {
     }
   }
 
-  private void swap(int sourceIndex, int destIndex, List<T> inputArray) {
-    T temp = inputArray.get(destIndex);
-    inputArray.set(destIndex, inputArray.get(sourceIndex));
-    inputArray.set(sourceIndex, temp);
+  private int compareNumerically(T a, T b) {
+    // T is an integer
+    int valueA = Integer.parseInt(a.toString());
+    int valueB = Integer.parseInt(b.toString());
+    return Integer.compare(valueA, valueB);
+  }
+
+  private void swap(int i, int j, List<T> list) {
+    T temp = list.get(i);
+    list.set(i, list.get(j));
+    list.set(j, temp);
   }
 
   private void dfsAlgorithm(T vertex, List<T> visited, Stack<T> stack) {
