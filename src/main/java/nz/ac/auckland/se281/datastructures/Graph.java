@@ -21,7 +21,7 @@ public class Graph<T extends Comparable<T>> {
 
   /**
    * A graph that is composed of a set of verticies and edges.
-   * 
+   *
    * @param verticies the set of verticies in the graph.
    * @param edges the set of edges in the graph.
    */
