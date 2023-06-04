@@ -4,6 +4,11 @@ public class Node<T> {
   private T data;
   private Node<T> next;
 
+  /**
+   * A node that contains data.
+   *
+   * @param data
+   */
   public Node(T data) {
     this.data = data;
     this.next = null;
