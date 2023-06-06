@@ -387,5 +387,54 @@ public class MainTest {
       assertContains("Successfully opened graph from file g.txt");
       assertContains("The graph is NOT an equivalence relation");
     }
+
+    @Test
+    public void T1_I_equivalence() throws Exception {
+      runCommands(OPEN_FILE, "i.txt", CHECK_EQUIVALENCE);
+      assertContains("Successfully opened graph from file i.txt");
+      assertContains("The graph is NOT an equivalence relation");
+    }
+
+    @Test
+    public void T1_I_roots() throws Exception {
+      runCommands(OPEN_FILE, "i.txt", LIST_ROOT_VERTICIES);
+      assertContains("Successfully opened graph from file i.txt");
+      assertContains("[1, 4]");
+    }
+
+    @Test
+    public void T1_H_roots() throws Exception {
+      runCommands(OPEN_FILE, "h.txt", LIST_ROOT_VERTICIES);
+      assertContains("Successfully opened graph from file h.txt");
+      assertContains("[0, 2, 9, 19]");
+    }
+
+    @Test
+    public void T2_H_iterative_BFS() throws Exception {
+      runCommands(OPEN_FILE, "h.txt", GRAPH_SEARCH_IBFS);
+      assertContains("Successfully opened graph from file h.txt");
+      assertContains("[0, 22, 23, 8, 36, 3, 4, 5, 21, 2, 6, 7, 9, 19, 11]");
+    }
+
+    @Test
+    public void T2_H_iterative_DFS() throws Exception {
+      runCommands(OPEN_FILE, "h.txt", GRAPH_SEARCH_IDFS);
+      assertContains("Successfully opened graph from file h.txt");
+      assertContains("[0, 22, 8, 3, 36, 23, 4, 21, 5, 2, 6, 7, 9, 19, 11]");
+    }
+
+    @Test
+    public void T2_H_recursive_DFS() throws Exception {
+      runCommands(OPEN_FILE, "h.txt", GRAPH_SEARCH_RDFS);
+      assertContains("Successfully opened graph from file h.txt");
+      assertContains("[0, 22, 8, 3, 36, 23, 4, 21, 5, 2, 6, 7, 9, 19, 11]");
+    }
+
+    @Test
+    public void T2_H_recursive_BFS() throws Exception {
+      runCommands(OPEN_FILE, "h.txt", GRAPH_SEARCH_RBFS);
+      assertContains("Successfully opened graph from file h.txt");
+      assertContains("[0, 22, 23, 8, 36, 3, 4, 5, 21, 2, 6, 7, 9, 19, 11]");
+    }
   }
 }
